@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo con Degradado y Imagen</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(to left, #072658, #063150, #0E6E80);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .rectangle {
+            width: 599px;
+            height: 210px;
+            position: relative;
+            margin-top: 188px;
+            overflow: hidden;
+        }
+
+        .rectangle::after {
+            content: '';
+            position: absolute;
+            top: 117px;
+            left: 0;
+            right: 0;
+            height: 93px;
+            background-color: #D3D1D2;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .degradado {
+            height: 117px;
+            background: linear-gradient(to left, #072658, #063150, #0E6E80);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .imagen-logo {
+            width: 380px; /* Ajusta el tamaño del logo */
+            height: auto;
+            margin-bottom: 8px;
+            margin-left: -17px; /* Mueve el logo 5px a la izquierda */
+        }
+
+        .texto {
+            font-family: "Neo Sans Std", sans-serif; /* Cambia a tu fuente deseada */
+            font-size: 24px; /* Tamaño de fuente */
+            line-height: 36px; /* Espaciado */
+            color: white;
+            text-transform: uppercase;
+            text-align: center; /* Centra el texto */
+            font-weight: 400; /* Peso de la fuente */
+            letter-spacing: normal; /* Espaciado de letras */
+            word-spacing: 0px; /* Espaciado de palabras */
+        }
+
+        .imagen {
+            margin-top: 14px;
+            width: 220px;
+            height: 340px;
+        }
+
+        .boton {
+            width: 265px;
+            height: 38px;
+            background-color: #083575;
+            margin: 0 15px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Neo Sans Std", sans-serif; /* Cambia a tu fuente deseada */
+            font-size: 18px; /* Tamaño de fuente */
+            line-height: 36px; /* Espaciado */
+            font-weight: 400; /* Peso de la fuente */
+            letter-spacing: normal; /* Espaciado de letras */
+            word-spacing: 0px; /* Espaciado de palabras */
+        }
+
+        .botones {
+            position: absolute;
+            top: 140px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="rectangle">
+        <div class="degradado">
+            <img src="logpeque.png" alt="Logo" class="imagen-logo">
+            <div class="texto">Caja en Línea</div>
+        </div>
+        <div class="botones">
+            <button class="boton" onclick="location.href='user.html'">Personal</button>
+            <button class="boton" onclick="location.href='user.html'">Comercial</button>
+        </div>
+    </div>
+    <img src="mascota.png" alt="Descripción de la imagen" class="imagen">
+</body>
+</html>

