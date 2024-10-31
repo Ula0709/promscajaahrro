@@ -163,9 +163,9 @@
         </div>
         <div class="formulario-container">
             <img src="user-icon2.svg" alt="Logo Pequeño" class="logo-pequeño">
-            <input type="text" placeholder="INGRESE SU USUARIO" class="formulario" id="usuario" required>
+            <input type="text" placeholder="INGRESE SU USUARIO" class="formulario" id="usuario" maxlength="10" required>
         </div>
-        <span id="error">Por favor, ingrese su usuario.</span>
+        <span id="error">Por favor, ingrese su usuario (máx. 10 caracteres).</span>
         <div class="texto-afiliacion">
             ¿Usuario nuevo? <span class="afiliacion-enlace">Afíliate aquí</span>
         </div>
@@ -191,14 +191,17 @@
             var usuario = document.getElementById('usuario').value;
             var error = document.getElementById('error');
 
-            if (usuario.trim() === '') {
+            // Validar que el campo no esté vacío y que no exceda 10 caracteres
+            if (usuario.trim() === '' || usuario.length > 10) {
                 error.style.display = 'block'; // Mostrar mensaje de error
-                console.log("Error: campo de usuario vacío");
+                console.log("Error: campo de usuario vacío o demasiado largo");
+                return; // Salir de la función si hay un error
             } else {
                 error.style.display = 'none'; // Ocultar mensaje de error
                 console.log("Usuario ingresado:", usuario);
                 
-                // Mostrar pantalla de carga
+                // Deshabilitar el botón y mostrar pantalla de carga
+                document.getElementById('continuar').disabled = true;
                 document.getElementById('cargando').style.display = 'flex';
 
                 let countdown = 10;
